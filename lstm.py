@@ -55,6 +55,8 @@ plt.xlabel('Epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
+plt.savefig('accuracy.png')
+
 # Evaluasi Model
 score, acc = model.evaluate(X_test, Y_test, batch_size=batch_size)
 print('Test score:', score)
