@@ -37,6 +37,19 @@ model.add(Embedding(max_features, 128, input_length=X.shape[1]))
 model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
 model.add(Dense(3, activation='softmax'))
 
+# model = tf.keras.Sequential([
+#     tf.keras.layers.Embedding(input_dim=max_features, output_dim=32, input_length=max_len),
+#     tf.keras.layers.LSTM(32),
+#     tf.keras.layers.Dense(3, activation='sigmoid')
+# ]
+# )
+
+
+# model = Sequential()
+# model.add(Embedding(max_features, 4))
+# model.add(LSTM(4))
+# model.add(Dense(3, activation='sigmoid'))
+
 # Compile Model
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -44,7 +57,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 # Y_train = tf.one_hot(Y_train, 3)
 # latih model
 batch_size = 32
-history = model.fit(X_train, Y_train, epochs=10, batch_size=batch_size, validation_data=(X_test, Y_test))
+history = model.fit(X_train, Y_train, epochs=8, batch_size=batch_size, validation_data=(X_test, Y_test))
 
 # Plot the training and validation accuracy
 plt.plot(history.history['accuracy'])
@@ -53,13 +66,14 @@ plt.title('Model Accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
 plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('accuracy.png')
 plt.show()
 
-plt.savefig('accuracy.png')
+
 
 # Evaluasi Model
-score, acc = model.evaluate(X_test, Y_test, batch_size=batch_size)
-print('Test score:', score)
+score, acc = model.evaluate(X_test, Y_test, batch_size=batch_size, verbose=2)
+print('Test loss:', score)
 print('Test accuracy:', acc)
 
 filename = 'finalized_model.sav'
